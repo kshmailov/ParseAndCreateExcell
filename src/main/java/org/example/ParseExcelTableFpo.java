@@ -38,20 +38,20 @@ public class ParseExcelTableFpo {
         for (Row row : sheet) {
             String cellValue = row.getCell(0).getStringCellValue();
             if (cellValue.contains("Нормальная схема")) {
-                String keyNameScheme = "[Нормальная_схема" + schemesGroup + "]";
+                String keyNameScheme = "Нормальная_схема" + schemesGroup;
                 schemes.add(keyNameScheme);
             } else if (cellValue.contains("или")) {
                 String[] schemesFrag = cellValue.split("или");
                 for (String frag : schemesFrag) {
                     if (!frag.isEmpty()) {
                         String nameScheme = modifiedNameSchemes(frag);
-                        String keyNameScheme = "[" + nameScheme + schemesGroup + "]";
+                        String keyNameScheme = nameScheme + schemesGroup;
                         schemes.add(keyNameScheme);
                     }
                 }
             } else if (!modifiedNameSchemes(cellValue).isEmpty()) {
                 String nameScheme = modifiedNameSchemes(cellValue);
-                String keyNameScheme = "[" + nameScheme + schemesGroup + "]";
+                String keyNameScheme = nameScheme + schemesGroup;
                 schemes.add(keyNameScheme);
             }
 
@@ -72,7 +72,7 @@ public class ParseExcelTableFpo {
         return modifiedNameSchemes;
     }
     public static ArrayList<String> createTableFpoString(HashSet<String> firstSheet, HashSet<String> secondSheet,String schemesGroup, String schemesKpr, String sezon){
-        StringBuilder tableString;
+
         String tsTableString = null;
         ArrayList<String> listSchemeFpo = new ArrayList<>();
 
@@ -90,11 +90,11 @@ public class ParseExcelTableFpo {
         String po = "*ФПО1";
         for (String scheme : firstSheet){
             if (!secondSheet.contains(scheme)){
-                tableString = new StringBuilder(String.join(" ", scheme, tsTableString,sezon, po, schemesKpr));
+                String tableString = String.join(" ", scheme, tsTableString,sezon, po, schemesKpr);
                 for (int i =0; i<32; i++){
-                    tableString.append(" []");
+                    tableString+=" []";
                 }
-                listSchemeFpo.add(tableString.toString());
+                listSchemeFpo.add(tableString);
             }
         }
         return listSchemeFpo;

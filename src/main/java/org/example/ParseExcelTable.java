@@ -53,20 +53,20 @@ public class ParseExcelTable {
             for (Row row : list) {
                 String cellValue = row.getCell(0).getStringCellValue();
                 if (cellValue.contains("Нормальная схема")) {
-                    String keyNameScheme = "[Нормальная_схема" + schemesGroup + "]";
+                    String keyNameScheme = "Нормальная_схема" + schemesGroup;
                     tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,schemesKpr));
                 } else if (cellValue.contains("или")) {
                     String[] schemesFrag = cellValue.split("или");
                     for (String frag : schemesFrag) {
                         if (!frag.isEmpty()) {
                             String nameScheme = modifiedNameSchemes(frag);
-                            String keyNameScheme = "[" + nameScheme + schemesGroup + "]";
+                            String keyNameScheme = nameScheme + schemesGroup;
                             tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,schemesKpr));
                         }
                     }
                 } else if (!modifiedNameSchemes(cellValue).isEmpty()) {
                     String nameScheme = modifiedNameSchemes(cellValue);
-                    String keyNameScheme = "[" + nameScheme + schemesGroup + "]";
+                    String keyNameScheme = nameScheme + schemesGroup;
                     tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,schemesKpr));
                 }
 
@@ -235,7 +235,7 @@ public class ParseExcelTable {
         return mapFormPo;
     }
     public static String createTableString(String schemesGroup, String sezonGroup,Row row, String keyNameScheme, String schemesKpr){
-        StringBuilder tableString;
+
         String tsTableString = null;
 
         switch (schemesGroup) {
@@ -254,15 +254,15 @@ public class ParseExcelTable {
         String boolFormula ="["+mapFormulaPo.get(po)+"&"+sezonGroup+ "]";
         String poString=keyMapPo.get(po);
 
-        tableString = new StringBuilder(String.join(" ", keyNameScheme, tsTableString, boolFormula, poString, schemesKpr));
+        String tableString = String.join(" ", keyNameScheme, tsTableString, boolFormula, poString, schemesKpr);
         for (int i =3; i<35; i++){
             String uv = Integer.toString((int) row.getCell(i).getNumericCellValue());
             if (uv.equals("0")){
-                tableString.append(" []");
+                tableString+=" []";
             }else {
-                tableString.append(" ").append(keyMapUv.get(uv));
+                tableString+=" "+keyMapUv.get(uv);
             }
         }
-        return tableString.toString();
+        return tableString;
     }
 }
