@@ -34,6 +34,36 @@ public class ParseExcelTable {
         for (Sheet list : sheets) {
 
             String schemesKpr = list.getRow(0).getCell(3).getStringCellValue();
+            String kpr = null;
+            switch (schemesKpr){
+                case "КПР-1_\"Юг\"":
+                    kpr="КПР-1_\"Юг\"";
+                    break;
+                case "КПР-2_\"Юг\"":
+                    kpr="КПР-2_\"Юг\"";
+                    break;
+                case "КПР-1_\"Маныч\"":
+                    kpr="КПР-1_\"Маныч\"";
+                    break;
+                case "КПР-2_\"Маныч\"":
+                    kpr="КПР-2_\"Маныч\"";
+                    break;
+                case "КПР-3_\"Маныч\"":
+                    kpr="КПР-3_\"Маныч\"";
+                    break;
+                case "КПР-4_\"Маныч\"":
+                    kpr="КПР-4_\"Маныч\"";
+                    break;
+                case "КПР-1_\"Кубанское\"":
+                    kpr="КПР-1_\"Кубанское\"";
+                    break;
+                case "КПР-2_\"Кубанское\"":
+                    kpr="КПР-2_\"Кубанское\"";
+                    break;
+                case "КПР-3_\"Кубанское\"":
+                    kpr="КПР-3_\"Кубанское\"";
+                    break;
+            }
             String sezon = list.getRow(1).getCell(0).getStringCellValue();
             String schemesGroup = "";
             if (schemesKpr.contains("Юг")) {
@@ -54,20 +84,20 @@ public class ParseExcelTable {
                 String cellValue = row.getCell(0).getStringCellValue();
                 if (cellValue.contains("Нормальная схема")) {
                     String keyNameScheme = "Нормальная_схема" + schemesGroup;
-                    tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,schemesKpr));
+                    tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,kpr));
                 } else if (cellValue.contains("или")) {
                     String[] schemesFrag = cellValue.split("или");
                     for (String frag : schemesFrag) {
                         if (!frag.isEmpty()) {
                             String nameScheme = modifiedNameSchemes(frag);
                             String keyNameScheme = nameScheme + schemesGroup;
-                            tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,schemesKpr));
+                            tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,kpr));
                         }
                     }
                 } else if (!modifiedNameSchemes(cellValue).isEmpty()) {
                     String nameScheme = modifiedNameSchemes(cellValue);
                     String keyNameScheme = nameScheme + schemesGroup;
-                    tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,schemesKpr));
+                    tableUV.add(createTableString(schemesGroup,sezonGroup, row, keyNameScheme,kpr));
                 }
 
             }
@@ -254,15 +284,15 @@ public class ParseExcelTable {
         String boolFormula ="["+mapFormulaPo.get(po)+"&"+sezonGroup+ "]";
         String poString=keyMapPo.get(po);
 
-        String tableString = String.join(" ", keyNameScheme, tsTableString, boolFormula, poString, schemesKpr);
+        StringBuilder tableString = new StringBuilder(String.join(" ", keyNameScheme, tsTableString, boolFormula, poString, schemesKpr));
         for (int i =3; i<35; i++){
             String uv = Integer.toString((int) row.getCell(i).getNumericCellValue());
             if (uv.equals("0")){
-                tableString+=" []";
+                tableString.append(" []");
             }else {
-                tableString+=" "+keyMapUv.get(uv);
+                tableString.append(" ").append(keyMapUv.get(uv));
             }
         }
-        return tableString;
+        return tableString.toString();
     }
 }

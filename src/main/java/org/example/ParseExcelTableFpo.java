@@ -27,6 +27,36 @@ public class ParseExcelTableFpo {
         HashSet<String> schemes = new HashSet<>();
         Sheet sheet = workbook.getSheetAt(list);
         String schemesKpr = sheet.getRow(0).getCell(3).getStringCellValue();
+        String kpr = null;
+        switch (schemesKpr){
+            case "КПР-1_\"Юг\"":
+                kpr="КПР-1_\"Юг\"";
+                break;
+            case "КПР-2_\"Юг\"":
+                kpr="КПР-2_\"Юг\"";
+                break;
+            case "КПР-1_\"Маныч\"":
+                kpr="КПР-1_\"Маныч\"";
+                break;
+            case "КПР-2_\"Маныч\"":
+                kpr="КПР-2_\"Маныч\"";
+                break;
+            case "КПР-3_\"Маныч\"":
+                kpr="КПР-3_\"Маныч\"";
+                break;
+            case "КПР-4_\"Маныч\"":
+                kpr="КПР-4_\"Маныч\"";
+                break;
+            case "КПР-1_\"Кубанское\"":
+                kpr="КПР-1_\"Кубанское\"";
+                break;
+            case "КПР-2_\"Кубанское\"":
+                kpr="КПР-2_\"Кубанское\"";
+                break;
+            case "КПР-3_\"Кубанское\"":
+                kpr="КПР-3_\"Кубанское\"";
+                break;
+        }
         String schemesGroup = "";
         if (schemesKpr.contains("Юг")) {
             schemesGroup = "{Юг}";
@@ -90,11 +120,11 @@ public class ParseExcelTableFpo {
         String po = "*ФПО1";
         for (String scheme : firstSheet){
             if (!secondSheet.contains(scheme)){
-                String tableString = String.join(" ", scheme, tsTableString,sezon, po, schemesKpr);
+                StringBuilder tableString = new StringBuilder(String.join(" ", scheme, tsTableString,sezon, po, schemesKpr));
                 for (int i =0; i<32; i++){
-                    tableString+=" []";
+                    tableString.append(" []");
                 }
-                listSchemeFpo.add(tableString);
+                listSchemeFpo.add(tableString.toString());
             }
         }
         return listSchemeFpo;

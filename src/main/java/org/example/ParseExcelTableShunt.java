@@ -605,11 +605,11 @@ public class ParseExcelTableShunt {
         for (int i = 0; i<uvList.size(); i++){
             String form = "["+poForm+"&"+uvListForm.get(i)+"]";
             String uv = uvList.get(i);
-            String tableString = String.join(" ", scheme, tsScheme, form, po,sech, uv);
+            StringBuilder tableString = new StringBuilder(String.join(" ", scheme, tsScheme, form, po,sech, uv));
             for (int j = 0; j<31;j++){
-                tableString+=(" []");
+                tableString.append(" []");
             }
-            listSchemeShunt.add(tableString);
+            listSchemeShunt.add(tableString.toString());
         }
 
 
