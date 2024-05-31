@@ -66,7 +66,7 @@ public class App
         listFpoKuban.addAll(ParseExcelTableFpo.createTableFpoString(kubanSheet5,kubanSheet4,"{Куб}","КПР-1_\"Кубанское\"","[Текущий_сезон=ЗИМА]"));
         listFpoKuban.addAll(ParseExcelTableFpo.createTableFpoString(kubanSheet4,kubanSheet5,"{Куб}","КПР-2_\"Кубанское\"","[Текущий_сезон=ЗИМА]"));
         CreateExcelTable.table(listFpoKuban);
-        ArrayList<String> listShunt = new ArrayList<>(ParseExcelTableShunt.parseExcelTableShunt("data/Shunt.xlsx",3));
+        ArrayList<String> listShunt = new ArrayList<>(ParseExcelTableShunt.parseExcelTableShunt());
         CreateExcelTable.table(listShunt);
         CreateExcelTable.closeTable();
 

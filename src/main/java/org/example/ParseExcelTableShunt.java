@@ -13,8 +13,8 @@ import java.util.TreeMap;
 
 public class ParseExcelTableShunt {
 
-    protected static ArrayList<String> parseExcelTableShunt(String path, int count) throws IOException {
-        FileInputStream fis = new FileInputStream(path);
+    protected static ArrayList<String> parseExcelTableShunt() throws IOException {
+        FileInputStream fis = new FileInputStream("data/Shunt.xlsx");
 
         Workbook workbook;
         try {
@@ -25,7 +25,7 @@ public class ParseExcelTableShunt {
         }
         ArrayList<String> shuntTable = new ArrayList<>();
         ArrayList<Sheet> sheets = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < 3; i++) {
             sheets.add(workbook.getSheetAt(i));
         }
         for (Sheet list : sheets) {
