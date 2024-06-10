@@ -824,7 +824,7 @@ public class ParseExcelTableShunt {
         for (int i = 0; i<uvList.size(); i++){
             String form = "["+poForm+"&"+uvListForm.get(i)+"]";
             String uv = uvList.get(i);
-            StringBuilder tableString = new StringBuilder(String.join(" ", scheme, tsScheme, form, po,sech, uv));
+            StringBuilder tableString = new StringBuilder(String.join(" ", "*ФСх", tsScheme, form, po,sech, uv));
             for (int j = 0; j<31;j++){
                 tableString.append(" []");
             }
